@@ -2,9 +2,18 @@ import { Bell, Plus, Home, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [userName, setUserName] = useState("Dr. Adeyemi");
+
+  useEffect(() => {
+    const savedName = localStorage.getItem("userName");
+    if (savedName) {
+      setUserName(savedName);
+    }
+  }, []);
 
   const alerts = [
     {
@@ -47,7 +56,7 @@ const Dashboard = () => {
       <div className="bg-card px-6 py-6 border-b">
         <div className="flex items-start justify-between mb-4">
           <div>
-            <h1 className="text-2xl font-semibold text-foreground">Dr. Adeyemi</h1>
+            <h1 className="text-2xl font-semibold text-foreground">{userName}</h1>
             <p className="text-sm text-muted-foreground">Lagos general hospital</p>
             <p className="text-xs text-muted-foreground mt-1">ID: HW-2025-089</p>
           </div>

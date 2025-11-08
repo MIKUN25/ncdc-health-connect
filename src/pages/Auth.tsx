@@ -22,14 +22,12 @@ const Auth = () => {
     e.preventDefault();
     
     if (!isLogin) {
-      if (formData.password !== formData.confirmPassword) {
-        toast.error("Passwords do not match");
+      if (!formData.fullName) {
+        toast.error("Please enter your full name");
         return;
       }
-      if (!formData.fullName || !formData.email || !formData.password || !formData.country) {
-        toast.error("Please fill all fields");
-        return;
-      }
+      // Save the user's name to localStorage
+      localStorage.setItem("userName", formData.fullName);
       toast.success("Account created successfully!");
       navigate("/dashboard");
     } else {
@@ -50,24 +48,23 @@ const Auth = () => {
         </div>
 
         <h1 className="text-2xl font-semibold text-center mb-8">
-          {isLogin ? "Sign In" : "Create an Account"}
+          Create an Account
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {!isLogin && (
-            <div className="space-y-2">
-              <Label htmlFor="fullName" className="text-sm text-muted-foreground">
-                Full Name
-              </Label>
-              <Input
-                id="fullName"
-                placeholder="Name Input"
-                value={formData.fullName}
-                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                className="h-12"
-              />
-            </div>
-          )}
+          <div className="space-y-2">
+            <Label htmlFor="fullName" className="text-sm text-muted-foreground">
+              Full Name
+            </Label>
+            <Input
+              id="fullName"
+              placeholder="Name Input"
+              value={formData.fullName}
+              onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+              className="h-12"
+              required
+            />
+          </div>
 
           <div className="space-y-2">
             <Label htmlFor="email" className="text-sm text-muted-foreground">
@@ -97,69 +94,50 @@ const Auth = () => {
             />
           </div>
 
-          {!isLogin && (
-            <>
-              <div className="space-y-2">
-                <Label htmlFor="confirmPassword" className="text-sm text-muted-foreground">
-                  Confirm Password
-                </Label>
-                <Input
-                  id="confirmPassword"
-                  type="password"
-                  placeholder="Password Input"
-                  value={formData.confirmPassword}
-                  onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                  className="h-12"
-                />
-              </div>
+          <div className="space-y-2">
+            <Label htmlFor="confirmPassword" className="text-sm text-muted-foreground">
+              Confirm Password
+            </Label>
+            <Input
+              id="confirmPassword"
+              type="password"
+              placeholder="Password Input"
+              value={formData.confirmPassword}
+              onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+              className="h-12"
+            />
+          </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="country" className="text-sm text-muted-foreground">
-                  Country
-                </Label>
-                <Select onValueChange={(value) => setFormData({ ...formData, country: value })}>
-                  <SelectTrigger className="h-12">
-                    <SelectValue placeholder="Your Country" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="nigeria">Nigeria</SelectItem>
-                    <SelectItem value="ghana">Ghana</SelectItem>
-                    <SelectItem value="kenya">Kenya</SelectItem>
-                    <SelectItem value="south-africa">South Africa</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </>
-          )}
+          <div className="space-y-2">
+            <Label htmlFor="country" className="text-sm text-muted-foreground">
+              Country
+            </Label>
+            <Select onValueChange={(value) => setFormData({ ...formData, country: value })}>
+              <SelectTrigger className="h-12">
+                <SelectValue placeholder="Your Country" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="nigeria">Nigeria</SelectItem>
+                <SelectItem value="ghana">Ghana</SelectItem>
+                <SelectItem value="kenya">Kenya</SelectItem>
+                <SelectItem value="south-africa">South Africa</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
           <div className="text-center text-sm pt-2">
-            {isLogin ? (
-              <>
-                Don't have an account?{" "}
-                <button
-                  type="button"
-                  onClick={() => setIsLogin(false)}
-                  className="text-primary font-medium hover:underline"
-                >
-                  Sign Up
-                </button>
-              </>
-            ) : (
-              <>
-                Already have an account?{" "}
-                <button
-                  type="button"
-                  onClick={() => setIsLogin(true)}
-                  className="text-primary font-medium hover:underline"
-                >
-                  Sign In
-                </button>
-              </>
-            )}
+            Already have an account?{" "}
+            <button
+              type="button"
+              onClick={() => setIsLogin(true)}
+              className="text-primary font-medium hover:underline"
+            >
+              Sign In
+            </button>
           </div>
 
           <Button type="submit" className="w-full h-12 mt-6">
-            {isLogin ? "Sign In" : "Create an account"}
+            Create an account
           </Button>
         </form>
       </div>
