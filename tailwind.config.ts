@@ -47,6 +47,17 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        status: {
+          validated: "hsl(var(--status-validated))",
+          "under-review": "hsl(var(--status-under-review))",
+          critical: "hsl(var(--status-critical))",
+          medium: "hsl(var(--status-medium))",
+        },
+        brand: {
+          blue: "hsl(var(--brand-blue))",
+          "blue-light": "hsl(var(--brand-blue-light))",
+          splash: "hsl(var(--brand-splash))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
