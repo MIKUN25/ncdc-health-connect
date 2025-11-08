@@ -9,7 +9,7 @@ import { toast } from "sonner";
 
 const Auth = () => {
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
